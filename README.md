@@ -9,10 +9,6 @@ I captured video from a stereo camera. You can save this as either a set of png 
 
 You should also collect a set of calibration images to data/calib/raw/\*.png. Each frame should show an unobstructed view of the standard opencv chessboard pattern. If part of the checkerboard is out of frame, this is not ideal, but my code will handle it ok IIRC. The chessboard must be flat - I recommend printing out `pattern.png` and using a thin layer of glue to attach it to something rigid, ideally flat glass as it will not deform. Then, to collect the calibration images, mount your camera on a tripod and hold the chessboard at many different locations and orientations, covering the entire field of view. For each image, hold the chessboard still and take a photo - this avoids motion blur or rolling shutter. 
 
-To get absolute scale, you will need to measure the sidelength of a single chessboard in mm. The best way to do this is to measure several squares using a caliper, then divide by the number of squares. This is necessary because each printer might print the chessboard at slightly different scale. 
-
-## Unpack stereo data
-
 `mkdir data`
 
 If your stereo data is horizontally stacked (IE each image contains both a left and right view) you can use the following ffmpeg command to split them:
@@ -23,6 +19,8 @@ ffmpeg -pattern_type glob -i "raw/*.png" -filter_complex "[0]crop=iw/2:ih:0:0[le
 ```
 
 If your data is an mp4 you can either adapt the command above or use some other ffmpeg command to unpack it into data/left/*.png and data/right/*.png
+
+To get absolute scale, you will also need to measure the sidelength of a single chessboard square in mm. The best way to do this is to measure several squares using a caliper or ruler, then divide by the number of squares. This is necessary because each printer might print the chessboard at slightly different scale. 
 
 ## Calibrate
 
